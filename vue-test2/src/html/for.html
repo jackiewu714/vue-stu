@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="../js/lib/vue.js"></script>
+    <style>
+        hr{
+            margin-top: 15px;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <!-- v-for -->
+    <div id="vForDiv">
+        <ol>
+            <li v-for="site in sites">
+                {{site.name}}
+            </li>
+        </ol>
+    </div>
+    <hr/>
+
+    <!-- v-for template -->
+    <div id="vForTemplateDiv">
+        <ul>
+            <template v-for="site in sites">
+                <li>{{site.name}}</li>
+                <li>---------------------</li>
+            </template>
+        </ul>
+    </div>
+    <hr/>
+
+    <!-- v-for 迭代对象(通过一个对象的属性来迭代数据) -->
+    <div id="vForObjectDiv">
+        <ul>
+            <li v-for="value in object">
+                {{value}}
+            </li>
+        </ul>
+    </div>
+    <hr/>
+
+    <div id="vForObjectParamDiv">
+        <ul>
+            <li v-for="(value, key, index) in object">
+                {{index}}. {{key}} : {{value}}
+            </li>
+        </ul>
+    </div>
+    <hr/>
+
+    <!-- v-for 迭代整数 -->
+    <div id="vForIntegerDiv">
+        <ul>
+            <li v-for="n in 10">{{n}}</li>
+        </ul>
+    </div>
+    <hr/>
+
+    <script>
+        //v-for
+        var vForVue = new Vue({
+            el: '#vForDiv',
+            data: {
+                sites:[
+                    {name: 'Google'},
+                    {name: 'Taobao'},
+                    {name: 'QQ'}
+                ]
+            }
+        });
+
+        //v-for template
+        var vForTemplateVue = new Vue({
+            el: '#vForTemplateDiv',
+            data: {
+                sites: [
+                    {name: 'Google'},
+                    {name: 'Taobao'},
+                    {name: 'QQ'}
+                ]
+            }
+        });
+
+        //v-for 迭代对象(通过一个对象的属性来迭代数据)
+        var vForObjectVue = new Vue({
+            el: '#vForObjectDiv',
+            data: {
+                object:{
+                    name: '菜鸟教程',
+                    url: 'http://www.runoob.com',
+                    slogan: '学的不仅是技术，更是梦想！'
+                }
+            }
+        });
+
+        var vForObjectParamVue = new Vue({
+            el: '#vForObjectParamDiv',
+            data: {
+                object:{
+                    name: '菜鸟教程',
+                    url: 'http://www.runoob.com',
+                    slogan: '学的不仅是技术，更是梦想！'
+                }
+            }
+        });
+
+        //v-for 迭代整数
+        var vForIntegerVue = new Vue({
+            el: '#vForIntegerDiv'
+        })
+    </script>
+</body>
+</html>
