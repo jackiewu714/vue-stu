@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="../js/lib/vue.js"></script>
+    <style>
+        hr{
+            margin-top: 15px;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <!-- v-if(条件判断使用 v-if 指令) -->
+    <div id="vIfDiv">
+        <p v-if="seen">现在你看到我了</p>
+        <template v-if="ok">
+            <h1>菜鸟教程</h1>
+            <p>学的不仅是技术，更是梦想！</p>
+            <p>哈哈啥，打字辛苦啊！！！</p>
+        </template>
+    </div>
+    <hr/>
+
+    <!-- v-else(用 v-else 指令给 v-if 添加一个 "else" 块) -->
+    <div id="vElseDiv">
+        <div v-if="Math.random()>0.5">
+            Sorry
+        </div>
+        <div v-else>
+            Not sorry
+        </div>
+    </div>
+    <hr/>
+
+    <!-- v-else-if(v-else-if 在 2.1.0 新增，顾名思义，用作 v-if 的 else-if 块。可以链式的多次使用) -->
+    <div id="vElseIfDiv">
+        <div v-if="type == 'A'">A</div>
+        <div v-else-if="type == 'B'">B</div>
+        <div v-else="type == 'C'">C</div>
+    </div>
+    <hr/>
+
+    <!-- v-show(也可以使用 v-show 指令来根据条件展示元素) -->
+    <div id="vShowDiv">
+        <h1 v-show="ok">{{message}}</h1>
+    </div>
+
+    <script>
+        //v-if(条件判断使用 v-if 指令)
+        var vIfVue = new Vue({
+            el: '#vIfDiv',
+            data: {
+                seen: false,
+                ok: true
+            }
+        });
+
+        //v-else(用 v-else 指令给 v-if 添加一个 "else" 块)
+        var vElseVue = new Vue({
+            el: '#vElseDiv'
+        });
+
+        //v-else-if(v-else-if 在 2.1.0 新增，顾名思义，用作 v-if 的 else-if 块。可以链式的多次使用)
+        var vElseIfVue = new Vue({
+            el: '#vElseIfDiv',
+            data: {
+                type: 'C'
+            }
+        });
+
+        //v-show(也可以使用 v-show 指令来根据条件展示元素)
+        var vShowVue = new Vue({
+            el: '#vShowDiv',
+            data: {
+                message: 'Hello v-show!',
+                ok: true
+            }
+        })
+    </script>
+</body>
+</html>

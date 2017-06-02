@@ -82,89 +82,89 @@
     </div>
     <hr/>
 
+    <script>
+        //文本、Html(使用 v-html 指令用于输出 html 代码)
+        var vHtmlVue = new Vue({
+            el: '#app',
+            data: {
+                message: 'Hello Vue.js!',
+                message1: '<h1>菜鸟教程</h1>'
+            }
+        });
+
+        //属性(HTML 属性中的值应使用 v-bind 指令)
+        var vBindVue = new Vue({
+            el: '#vBindDiv',
+            data:{
+                class1: false
+            }
+        });
+
+        //表达式(Vue.js 都提供了完全的 JavaScript 表达式支持)
+        var expressVue = new Vue({
+            el: '#expressDiv',
+            data:{
+                ok: true,
+                message: 'RUNOOB',
+                id: 1
+            }
+        });
+
+        //指令(指令是带有 v- 前缀的特殊属性, 用于在表达式的值改变时)
+        var cmdVue = new Vue({
+            el: '#cmdDiv',
+            data: {
+                seen: true,
+                ok: false
+            }
+        });
+
+        //参数(在指令后以冒号指明，例如 v-bind:href 即指原生的 href 属性)
+        var paramVue = new Vue({
+            el: '#paramDiv',
+            data:{
+                url: 'http://map.baidu.com',
+                target: '_blank'
+            }
+        });
+
+        //用户输入(在 input 输入框中我们可以使用 v-model 指令来实现双向数据绑定)
+        var inputVue = new Vue({
+            el: '#inputDiv',
+            data:{
+                message: 'Runoob!'
+            }
+        });
+
+        //按钮事件(可以使用 v-on 监听事件，并对用户的输入进行响应)
+        var buttonEventVue = new Vue({
+            el: '#buttonEventDiv',
+            data: {
+                message: 'Runoob!'
+            },
+            methods: {
+                reverseMessage: function(){
+                    this.message = this.message.split('').reverse().join('');
+                }
+            }
+        })
+
+        //过滤器(Vue.js 允许你自定义过滤器，被用作一些常见的文本格式化。由"管道符"指示)
+        var filterVue = new Vue({
+            el: '#filterDiv',
+            data: {
+                message: 'runoob'
+            },
+            filters: {
+                //过滤器函数接受表达式的值作为第一个参数, 以下实例对输入的字符串第一个字母转为大写
+                capitalize: function (value) {
+                    if(!value) return '';
+                    value = value.toString();
+                    return value.charAt(0).toUpperCase() + value.slice(1);
+                }
+            }
+        })
+    </script>
 </body>
 </html>
 
-<script>
-    //文本、Html(使用 v-html 指令用于输出 html 代码)
-    var vHtmlVue = new Vue({
-        el: '#app',
-        data: {
-            message: 'Hello Vue.js!',
-            message1: '<h1>菜鸟教程</h1>'
-        }
-    });
-
-    //属性(HTML 属性中的值应使用 v-bind 指令)
-    var vBindVue = new Vue({
-        el: '#vBindDiv',
-        data:{
-            class1: false
-        }
-    });
-
-    //表达式(Vue.js 都提供了完全的 JavaScript 表达式支持)
-    var expressVue = new Vue({
-        el: '#expressDiv',
-        data:{
-            ok: true,
-            message: 'RUNOOB',
-            id: 1
-        }
-    });
-
-    //指令(指令是带有 v- 前缀的特殊属性, 用于在表达式的值改变时)
-    var cmdVue = new Vue({
-        el: '#cmdDiv',
-        data: {
-            seen: true,
-            ok: false
-        }
-    });
-
-    //参数(在指令后以冒号指明，例如 v-bind:href 即指原生的 href 属性)
-    var paramVue = new Vue({
-        el: '#paramDiv',
-        data:{
-            url: 'http://map.baidu.com',
-            target: '_blank'
-        }
-    });
-
-    //用户输入(在 input 输入框中我们可以使用 v-model 指令来实现双向数据绑定)
-    var inputVue = new Vue({
-        el: '#inputDiv',
-        data:{
-            message: 'Runoob!'
-        }
-    });
-
-    //按钮事件(可以使用 v-on 监听事件，并对用户的输入进行响应)
-    var buttonEventVue = new Vue({
-        el: '#buttonEventDiv',
-        data: {
-            message: 'Runoob!'
-        },
-        methods: {
-            reverseMessage: function(){
-                this.message = this.message.split('').reverse().join('');
-            }
-        }
-    })
-
-    //过滤器(Vue.js 允许你自定义过滤器，被用作一些常见的文本格式化。由"管道符"指示)
-    var filterVue = new Vue({
-        el: '#filterDiv',
-        data: {
-            message: 'runoob'
-        },
-        filters: {
-            //过滤器函数接受表达式的值作为第一个参数, 以下实例对输入的字符串第一个字母转为大写
-            capitalize: function (value) {
-                if(!value) return '';
-                value = value.toString();
-                return value.charAt(0).toUpperCase() + value.slice(1);
-            }
-        }
-    })
-</script>
