@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="../js/lib/vue.js"></script>
+    <style>
+        hr{
+            margin-top: 15px;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <!-- computed 1 -->
+    <div id="computed1Div">
+        <p>原始字符串: {{message}}</p>
+        <p>计算后反转字符串: {{reversedMessage}}</p>
+    </div>
+    <hr/>
+
+    <!-- computed vs methods(可以使用 methods 来替代 computed，效果上两个都是一样的，但是 computed 是基于它的依赖缓存，
+    只有相关依赖发生改变时才会重新取值。而使用 methods ，在重新渲染的时候，函数总会重新调用执行。) -->
+    <div id="computedMethodDiv">
+        <p>原始字符串: {{message}}</p>
+        <p>计算后反转字符串: {{reversedMessage}}</p>
+        <p>使用方法后反转字符串: {{reversedMessage2()}}</p>
+    </div>
+    <hr/>
+
+    <!-- computed setter(computed 属性默认只有 getter ，不过在需要时你也可以提供一个 setter)  -->
+    <div id="computedSetterDiv">
+        <p>{{site}}</p>
+    </div>
+
+    <script>
+        //1. computed 1
+        var computed1Vue = new Vue({
+            el: '#computed1Div',
+            data: {
+                message : 'Runoob!'
+            },
+            computed: {
+                reversedMessage: function(){
+                    //this 指向vm实例
+                    return this.message.split('').reverse().join('');
+                }
+            }
+        });
+
+        //2. computed vs methods(可以使用 methods 来替代 computed，效果上两个都是一样的，但是 computed 是基于它的依赖缓存，
+        // 只有相关依赖发生改变时才会重新取值。而使用 methods ，在重新渲染的时候，函数总会重新调用执行。
+        var computedMethodVue = new Vue({
+            el: '#computedMethodDiv',
+            data: {
+                message: 'Runoob!'
+            },
+            computed: {
+                // 计算属性的 getter
+                reversedMessage: function(){
+                    // `this` 指向 vm 实例
+                    return this.message.split('').reverse().join('');
+                }
+            },
+            methods: {
+                reversedMessage2: function() {
+                    return this.message.split('').reverse().join('');
+                }
+            }
+        });
+
+        //3. computed setter(computed 属性默认只有 getter ，不过在需要时你也可以提供一个 setter)
+        var computedSetterVue = new Vue({
+            el: '#computedSetterDiv',
+            data: {
+                name: "Google",
+                url: 'http://www.google.com'
+            },
+            computed: {
+                site: {
+                    //getter
+                    get: function () {
+                        return this.name + ' ' + this.url;
+                    },
+                    //setter
+                    set: function (newVaule) {
+                        if(!newVaule) {
+                            console.log('newValue is undefined');
+                            return;
+                        }
+                        var valueArr = newVaule.split(' ');
+                        this.name = valueArr[0];
+                        this.url = valueArr[valueArr.length-1];
+                    }
+                }
+            }
+        });
+
+        // 调用 setter， vm.name 和 vm.url 也会被对应更新
+        computedSetterVue.site = '菜鸟教程 http://www.runoob.com';
+        document.write('name: ' + computedSetterVue.name + '<br/>');
+        document.write('url: ' + computedSetterVue.url + '<br/><hr/>');
+    </script>
+</body>
+</html>
