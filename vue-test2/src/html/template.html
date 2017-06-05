@@ -147,7 +147,7 @@
                     this.message = this.message.split('').reverse().join('');
                 }
             }
-        })
+        });
 
         //过滤器(Vue.js 允许你自定义过滤器，被用作一些常见的文本格式化。由"管道符"指示)
         var filterVue = new Vue({
@@ -163,7 +163,7 @@
                     return value.charAt(0).toUpperCase() + value.slice(1);
                 }
             }
-        })
+        });
     </script>
 </body>
 </html>

@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="../js/lib/vue.js"></script>
+    <style>
+        hr{
+            margin-top: 15px;
+            margin-bottom: 15px;
+        }
+        .active{
+            width: 100px;
+            height: 100px;
+            background: green;
+        }
+        .text-danger{
+            background: red;
+        }
+    </style>
+</head>
+<body>
+    <!-- 1. class 属性绑定 -->
+    <div id="classDiv" title="属性绑定">
+        <div class="static" v-bind:class="{active: isActive, 'text-danger':hasError}"></div>
+    </div>
+    <hr/>
+
+    <!-- 2. class 绑定数据里的一个对象 -->
+    <div id="classObjDiv" title="绑定数据里的一个对象">
+        <div class="static" v-bind:class="classObject"></div>
+    </div>
+    <hr/>
+
+    <!-- 3. class 绑定返回对象的计算属性 -->
+    <div id="classComputedDiv" title="绑定返回对象的计算属性">
+        <div class="static" v-bind:class="classObject"></div>
+    </div>
+    <hr/>
+
+    <!-- 4. class 把一个数组传给 v-bind:class  -->
+    <div id="classArrayDiv" title="把一个数组传给 v-bind:class">
+        <div v-bind:class="[activeClass, errorClass]"></div>
+    </div>
+    <hr/>
+
+    <!-- 5. class 使用三元表达式来切换列表中的 class -->
+    <div id="classSanyuanDiv" title="使用三元表达式来切换列表中的 class">
+        <div v-bind:class="[errorClass, isActive ? activeClass : '']"></div>
+    </div>
+    <hr/>
+
+    <!-- 6. style 可以在 v-bind:style 直接设置样式 -->
+    <div id="styleDiv">
+        <div v-bind:style="{color: activeColor, fontSize: fontSize + 'px'}">菜鸟教程</div>
+    </div>
+    <hr/>
+
+    <!-- 7. style 可以直接绑定到一个样式对象，让模板更清晰 -->
+    <div id="styleObjectDiv">
+        <div v-bind:style="styleObject">喝了啤酒后，真是口干啊！</div>
+    </div>
+    <hr/>
+
+    <!-- 8. style v-bind:style 可以使用数组将多个样式对象应用到一个元素上 -->
+    <div id="styleObjectArrayDiv">
+        <div v-bind:style="[baseStyles, overridingStyles]">v-bind:style 可以使用数组将多个样式对象应用到一个元素上</div>
+    </div>
+    <hr/>
+
+    <script>
+        //1. class 属性绑定
+        var classVue = new Vue({
+            el: '#classDiv',
+            data: {
+                isActive: true,
+                hasError: true
+            }
+        });
+
+        //2. class 绑定数据里的一个对象
+        var classObjectVue = new Vue({
+            el: '#classObjDiv',
+            data: {
+                classObject: {
+                    active: true,
+                    'text-danger': false
+                }
+            }
+        });
+
+        //3. class 绑定返回对象的计算属性
+        var classComputedVue = new Vue({
+            el: '#classComputedDiv',
+            data: {
+                isActive: true,
+                error: null
+            },
+            computed: {
+                classObject: function () {
+                    return {
+                        active: this.isActive && !this.error,
+                        'text-danger': this.error && this.error.type == 'fatal'
+                    }
+                }
+            }
+        });
+
+        //4. class 把一个数组传给 v-bind:class
+        var classArrayVue = new Vue({
+            el: '#classArrayDiv',
+            data: {
+                activeClass: 'active',
+                errorClass: 'text-danger'
+            }
+        });
+
+        //5. class 使用三元表达式来切换列表中的 class
+        var classSanyuanVue = new Vue({
+            el: '#classSanyuanDiv',
+            data: {
+                isActive: true,
+                activeClass: 'active',
+                errorClass: 'text-danger'
+            }
+        });
+
+        //6. style 可以在 v-bind:style 直接设置样式
+        var styleVue = new Vue({
+            el: '#styleDiv',
+            data: {
+                activeColor: 'green',
+                fontSize: 30
+            }
+        });
+
+        //7. style 可以直接绑定到一个样式对象，让模板更清晰
+        var styleObjectVue = new Vue({
+            el: '#styleObjectDiv',
+            data:{
+                styleObject: {
+                    color: 'yellow',
+                    fontSize: '30px'
+                }
+            }
+        });
+
+        //8. style v-bind:style 可以使用数组将多个样式对象应用到一个元素上
+        var styleObjectArrayVue = new Vue({
+            el: '#styleObjectArrayDiv',
+            data: {
+                baseStyles: {
+                    color: 'blue',
+                    fontSize: '30px',
+                    'margin-top': '30px',
+                    'margin-bottom': '30px'
+                },
+                overridingStyles: {
+                    'font-weight': 'bold'
+                }
+            }
+        });
+
+    </script>
+</body>
+</html>
