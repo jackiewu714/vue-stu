@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>event</title>
+    <script type="text/javascript" src="../js/lib/vue.js"></script>
+    <style>
+        hr{
+            margin-top: 15px;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <!-- 1. event 事件监听可以使用 v-on 指令 -->
+    <div id="eventDiv" title="event 事件监听可以使用 v-on 指令">
+        <button v-on:click="counter += 1">增加1</button>
+        <p>这个按钮被点击了 {{counter}} 次。</p>
+    </div>
+    <hr/>
+
+    <!-- 2. event v-on 可以接收一个定义的方法来调用 -->
+    <div id="eventMethodDiv" title="event v-on 可以接收一个定义的方法来调用">
+        <!-- `greet` 是在下面定义的方法名 -->
+        <button v-on:click="greet">Greet</button>
+    </div>
+    <hr/>
+
+    <!-- 3. event 除了直接绑定到一个方法，也可以用内联 JavaScript 语句 -->
+    <div id="eventFunctionDiv" title="event 除了直接绑定到一个方法，也可以用内联 JavaScript 语句">
+        <button v-on:click="say('Hi');">Say Hi</button>
+        <button v-on:click="say('What');">Say what</button>
+    </div>
+    <hr/>
+
+    <!-- 4. event 事件修饰符 -->
+    <div id="eventXiushifuDiv" title="event 事件修饰符">
+        <!-- 阻止单击事件冒泡 -->
+        <a v-on:click.stop="doThis">阻止单击事件冒泡</a>
+        <!-- 提交事件不再重载页面 -->
+        <form v-on:submit.prevent="onSubmit">
+            <input type="submit" value="提交" />
+        </form>
+        <!-- 修饰符可以串联 -->
+        <a v-on:click.stop.prevent="doThat">修饰符可以串联</a>
+        <!-- 只有修饰符 -->
+        <form v-on:submit.prevent>只有修饰符</form>
+        <!-- 添加事件侦听器时使用事件捕获模式 -->
+        <div v-on:click.capture="doThis">添加事件侦听器时使用事件捕获模式</div>
+        <!-- 只当事件在该元素本身（而不是子元素）触发时触发回调 -->
+        <div v-on:click.self="doThat">
+            <button name="button1" value="button1">button1</button>
+            <button name="button2" value="button2">button2</button>
+            <button name="button3" value="button3">button3</button>
+        </div>
+    </div>
+    <hr/>
+
+    <!-- 5. key 按键修饰符 -->
+    <div id="keyXiushifuDiv" title="key 按键修饰符">
+        <!-- 只有在 keyCode 是 13 时调用 vm.submit() -->
+        <input v-on:keyup.13="submit" placeholder="按enter键提交" />
+        <!-- 同上 -->
+        <input v-on:keyup.enter="submit" placeholder="按enter键提交-alias" />
+        <!-- 缩写语法 -->
+        <input @keyup.enter="submit" placeholder="按enter键提交-简写" />
+
+        <input @keyup.tab="tab"
+               @keyup.delete="deleteFunc"
+               @keyup.esc="escFunc"
+               @keyup.space="spaceFunc"
+               @keyup.up="upFunc"
+               @keyup.down="downFunc"
+               @keyup.left="leftFunc"
+               @keyup.right="rightFunc"
+               @keyup.meta="spaceFunc"
+               @click.alt="altFunc"
+               @click.ctrl="ctrlFunc"
+               @click.shift="shiftFunc"
+               placeholder="复合事件绑定-简写" />
+
+    </div>
+
+    <script>
+        //1. event 事件监听可以使用 v-on 指令
+        var eventVue = new Vue({
+            el: '#eventDiv',
+            data: {
+                counter: 0
+            }
+        });
+
+        //2. event v-on 可以接收一个定义的方法来调用
+        var eventMethodVue = new Vue({
+            el: '#eventMethodDiv',
+            data: {
+                name: 'Vue.js'
+            },
+            methods: {
+                greet: function (event) {
+                    alert('Hello ' + this.name + '!');
+                    //'event'是原生DOM事件
+                    if(event) {
+                        alert(event.target.tagName);
+                    }
+                }
+            }
+        });
+
+        //3. event 除了直接绑定到一个方法，也可以用内联 JavaScript 语句
+        var eventFunctionVue = new Vue({
+            el: '#eventFunctionDiv',
+            methods: {
+                say: function (msg) {
+                    alert(msg);
+                }
+            }
+        });
+
+        //4. event 事件修饰符
+        var eventXiushifuVue = new Vue({
+            el: '#eventXiushifuDiv',
+            methods: {
+                doThis: function (event) {
+                    var tagName = event? event.target.tagName: '';
+                    alert(tagName + ' doThis');
+                }, doThat: function (event) {
+                    var tagName = event? event.target.tagName: '';
+                    alert(tagName + ' doThat');
+                }, onSubmit: function (event) {
+                    var tagName = event? event.target.tagName: '';
+                    alert(tagName + ' onSubmit');
+                }
+            }
+        });
+
+        //5. key 按键修饰符
+        var keyXiushifuVue = new Vue({
+            el: '#keyXiushifuDiv',
+            methods: {
+                submit: function (event) {
+                    var tagName = event? event.target.tagName: '';
+                    alert(tagName + ' submit');
+                },
+                tab: function (event) {
+                    var tagName = event? event.target.tagName: '';
+                    alert(tagName + ' tab');
+                },
+                deleteFunc: function (event) {
+                    var tagName = event? event.target.tagName: '';
+                    alert(tagName + ' delete');
+                },
+                escFunc: function (event) {
+                    var tagName = event? event.target.tagName: '';
+                    alert(tagName + ' esc');
+                },
+                spaceFunc: function (event) {
+                    var tagName = event? event.target.tagName: '';
+                    alert(tagName + ' space');
+                },
+                upFunc: function (event) {
+                    var tagName = event? event.target.tagName: '';
+                    alert(tagName + ' up');
+                },
+                downFunc: function (event) {
+                    var tagName = event? event.target.tagName: '';
+                    alert(tagName + ' down');
+                },
+                leftFunc: function (event) {
+                    var tagName = event? event.target.tagName: '';
+                    alert(tagName + ' left');
+                },
+                rightFunc: function (event) {
+                    var tagName = event? event.target.tagName: '';
+                    alert(tagName + ' right');
+                },
+                altFunc: function (event) {
+                    var tagName = event? event.target.tagName: '';
+                    alert(tagName + ' alt');
+                },
+                metaFunc: function (event) {
+                    var tagName = event? event.target.tagName: '';
+                    alert(tagName + ' meta');
+                },
+                ctrlFunc: function (event) {
+                    var tagName = event? event.target.tagName: '';
+                    alert(tagName + ' ctrl');
+                },
+                shiftFunc: function (event) {
+                    var tagName = event? event.target.tagName: '';
+                    alert(tagName + ' shift');
+                }
+            }
+        });
+
+    </script>
+
+
+</body>
+</html>
