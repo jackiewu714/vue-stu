@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>command</title>
+    <script type="text/javascript" src="../js/lib/vue.js"></script>
+    <style>
+        hr{
+            margin-top: 15px;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <!-- 1.自定义全局指令 v-gfocus, 该指令的功能是在页面加载时，元素获得焦点 -->
+    <div id="globalCmdDiv">
+        <p>自定义全局指令，页面载入时，input 元素自动获取焦点：</p>
+        <input v-gfocus>
+    </div>
+
+    <!-- 2.自定义局部指令 v-pfocus，这样指令只能在这个实例中使用 -->
+    <div id="partCmdDiv">
+        <p>自定义局部指令，页面载入时，input元素自动获取焦点: </p>
+        <input v-pfocus>
+    </div>
+
+    <script>
+        //1.自定义全局指令 v-focus, 该指令的功能是在页面加载时，元素获得焦点
+        //注册一个全局自定义指令 v-focus
+        Vue.directive('gfocus', {
+            //当绑定元素插入到 DOM 中
+            inserted: function (el) {
+                //聚焦元素
+                el.focus();
+            }
+        });
+
+        //创建根实例
+        var globalCmdVue = new Vue({
+            el: '#globalCmdDiv'
+        });
+
+        //2.自定义局部指令 v-pfocus，这样指令只能在这个实例中使用
+        var partCmdVue = new Vue({
+            el: '#partCmdDiv',
+            directives: {
+                //注册一个局部的自定义指令 v-pfocus
+                pfocus: {
+                    //指令的定义
+                    inserted: function (el) {
+                        //聚焦元素
+                        el.focus();
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
