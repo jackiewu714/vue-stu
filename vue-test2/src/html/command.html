@@ -17,12 +17,30 @@
         <p>自定义全局指令，页面载入时，input 元素自动获取焦点：</p>
         <input v-gfocus>
     </div>
+    <hr/>
 
     <!-- 2.自定义局部指令 v-pfocus，这样指令只能在这个实例中使用 -->
     <div id="partCmdDiv">
         <p>自定义局部指令，页面载入时，input元素自动获取焦点: </p>
         <input v-pfocus>
     </div>
+    <hr/>
+
+    <!-- 3.指令定义函数提供了几个钩子函数（可选） -->
+    <div>
+        <p>钩子函数：</p>
+        <div id="gouziFuncDiv" v-runoob:hello.a.b="message">
+        </div>
+    </div>
+    <hr/>
+
+    <!-- 4.有时候我们不需要其他钩子函数，我们可以简写函数 -->
+    <div>
+        <p>钩子函数-简写函数</p>
+        <div id="gouzijianxieFuncDiv" v-runoobjianxie="{color: 'yellow', text: '钩子函数-简写示例！'}">
+        </div>
+    </div>
+    <hr/>
 
     <script>
         //1.自定义全局指令 v-focus, 该指令的功能是在页面加载时，元素获得焦点
@@ -53,6 +71,38 @@
                     }
                 }
             }
+        });
+
+        //3.指令定义函数提供了几个钩子函数（可选）
+        Vue.directive('runoob', {
+            bind: function (el, binding, vnode) {
+                var s = JSON.stringify;
+                el.innerHTML =
+                    'name:' + s(binding.name) + '<br>' +
+                    'value:' + s(binding.value) + '<br>' +
+                    'expression:' + s(binding.expression) + '<br>' +
+                    'argument:' + s(binding.arg) + '<br>' +
+                    'modifiers:' + s(binding.modifiers) + '<br>' +
+                    'vnode keys:' + Object.keys(vnode).join(', ')
+            }
+        });
+
+        var gouziFuncVue = new Vue({
+            el: '#gouziFuncDiv',
+            data: {
+                message: '菜鸟教程'
+            }
+        });
+
+        //4.有时候我们不需要其他钩子函数，我们可以简写函数
+        Vue.directive('runoobjianxie', function(el, binding) {
+            //简写方式设置文本及背景色
+            el.innerHTML = binding.value.text;
+            el.style.backgroundColor = binding.value.color;
+        });
+
+        var gouziFuncJianxieVue = new Vue({
+            el: '#gouzijianxieFuncDiv'
         });
     </script>
 </body>
